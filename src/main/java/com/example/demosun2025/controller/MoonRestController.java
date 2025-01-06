@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +23,11 @@ import java.util.List;
 public class MoonRestController {
 
 	private final MoonService moonService;
+	private final Clock clock;
 
-	public MoonRestController(MoonService moonService) {
+	public MoonRestController(MoonService moonService, Clock clock) {
 		this.moonService = moonService;
+		this.clock = clock;
 	}
 
 	@GetMapping(value = "/today")
@@ -32,7 +35,7 @@ public class MoonRestController {
 			@RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
 
 		TZID id = () -> tz;
-		LocalDate now = LocalDate.now();
+		LocalDate now = LocalDate.now(clock);
 
 		return getMoon(location, id, now);
 	}
@@ -40,7 +43,7 @@ public class MoonRestController {
 	@GetMapping(value = "/future")
 	public List<Moon> future(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
 			@RequestParam(value = "amount", defaultValue = "7") int amount,
-			@RequestParam(value = "interval", defaultValue = "0") Interval interval,
+							 @RequestParam(value = "interval", defaultValue = "DAY") Interval interval,
 			@RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
 
 		TZID id = () -> tz;
@@ -49,7 +52,7 @@ public class MoonRestController {
 		switch (interval) {
 		case DAY:
 			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now().plusDays(i);
+				LocalDate now = LocalDate.now(clock).plusDays(i);
 				Moon moon = getMoon(location, id, now);
 
 				moons.add(moon);
@@ -57,7 +60,7 @@ public class MoonRestController {
 			break;
 		case MONTH:
 			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now().plusMonths(i);
+				LocalDate now = LocalDate.now(clock).plusMonths(i);
 				Moon moon = getMoon(location, id, now);
 
 				moons.add(moon);
@@ -65,7 +68,7 @@ public class MoonRestController {
 			break;
 		case YEAR:
 			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now().plusYears(i);
+				LocalDate now = LocalDate.now(clock).plusYears(i);
 
 				Moon moon = getMoon(location, id, now);
 				moons.add(moon);
@@ -82,7 +85,7 @@ public class MoonRestController {
 	@GetMapping(value = "/past")
 	public List<Moon> past(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
 			@RequestParam(value = "amount", defaultValue = "7") int amount,
-			@RequestParam(value = "interval", defaultValue = "0") Interval interval,
+						   @RequestParam(value = "interval", defaultValue = "DAY") Interval interval,
 			@RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
 
 		TZID id = () -> tz;
@@ -91,7 +94,7 @@ public class MoonRestController {
 		switch (interval) {
 		case DAY:
 			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now().minusDays(i);
+				LocalDate now = LocalDate.now(clock).minusDays(i);
 
 				Moon moon = getMoon(location, id, now);
 				moons.add(moon);
@@ -99,7 +102,7 @@ public class MoonRestController {
 			break;
 		case MONTH:
 			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now().minusMonths(i);
+				LocalDate now = LocalDate.now(clock).minusMonths(i);
 
 				Moon moon = getMoon(location, id, now);
 				moons.add(moon);
@@ -107,7 +110,7 @@ public class MoonRestController {
 			break;
 		case YEAR:
 			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now().minusYears(i);
+				LocalDate now = LocalDate.now(clock).minusYears(i);
 				Moon moon = getMoon(location, id, now);
 
 				moons.add(moon);
