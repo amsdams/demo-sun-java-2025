@@ -17,27 +17,27 @@ import java.util.Optional;
 @Slf4j
 public class SunService {
 
-	public LocalDateTime getSunrise(TZID id, PlainDate plainDate, Location location) {
-		SolarTime amsterdam = SolarTime.ofLocation(location.getLatitude(), location.getLongitude());
-		Optional<Moment> sunrise = plainDate.get(amsterdam.sunrise());
-		if (sunrise.isPresent()) {
-			PlainTimestamp sunrisePlainTimestamp = sunrise.get().toZonalTimestamp(id.canonical());
-			return TemporalType.LOCAL_DATE_TIME.from(sunrisePlainTimestamp);
+    public LocalDateTime getSunrise(TZID id, PlainDate plainDate, Location location) {
+        SolarTime amsterdam = SolarTime.ofLocation(location.getLatitude(), location.getLongitude());
+        Optional<Moment> sunrise = plainDate.get(amsterdam.sunrise());
+        if (sunrise.isPresent()) {
+            PlainTimestamp sunrisePlainTimestamp = sunrise.get().toZonalTimestamp(id.canonical());
+            return TemporalType.LOCAL_DATE_TIME.from(sunrisePlainTimestamp);
 
-		}
-		return null;
+        }
+        return null;
 
-	}
+    }
 
-	public LocalDateTime getSunSet(TZID id, PlainDate plainDate, Location location) {
-		SolarTime amsterdam = SolarTime.ofLocation(location.getLatitude(), location.getLongitude());
-		Optional<Moment> sunset = plainDate.get(amsterdam.sunset());
-		if (sunset.isPresent()) {
-			PlainTimestamp sunsetPlainTimestamp = sunset.get().toZonalTimestamp(id.canonical());
-			return TemporalType.LOCAL_DATE_TIME.from(sunsetPlainTimestamp);
-		}
-		return null;
+    public LocalDateTime getSunSet(TZID id, PlainDate plainDate, Location location) {
+        SolarTime amsterdam = SolarTime.ofLocation(location.getLatitude(), location.getLongitude());
+        Optional<Moment> sunset = plainDate.get(amsterdam.sunset());
+        if (sunset.isPresent()) {
+            PlainTimestamp sunsetPlainTimestamp = sunset.get().toZonalTimestamp(id.canonical());
+            return TemporalType.LOCAL_DATE_TIME.from(sunsetPlainTimestamp);
+        }
+        return null;
 
-	}
+    }
 
 }

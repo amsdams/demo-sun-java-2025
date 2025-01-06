@@ -12,15 +12,15 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class Sun {
-	private LocalDate date;
-	private LocalDateTime rise;
-	private LocalDateTime set;
-	@JsonIgnore
-	private TZID tzid;
-	private Location location;
+    private LocalDate date;
+    private LocalDateTime rise;
+    private LocalDateTime set;
+    @JsonIgnore
+    private TZID tzid;
+    private Location location;
 
-	@JsonProperty("timezone")
-	public String getTimezone() {
-		return tzid.canonical();
-	}
+    @JsonProperty("timezone")
+    public String getTimezone() {
+        return tzid.canonical();
+    }
 }

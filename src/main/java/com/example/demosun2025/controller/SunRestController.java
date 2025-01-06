@@ -21,111 +21,111 @@ import java.util.List;
 @RequestMapping("suns")
 public class SunRestController {
 
-	private final SunService sunService;
+    private final SunService sunService;
 
-	public SunRestController(SunService sunService) {
-		this.sunService = sunService;
-	}
+    public SunRestController(SunService sunService) {
+        this.sunService = sunService;
+    }
 
-	@GetMapping(value = "/today")
-	public Sun today(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
-			@RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
+    @GetMapping(value = "/today")
+    public Sun today(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
+                     @RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
 
-		TZID id = () -> tz;
-		LocalDate now = LocalDate.now();
+        TZID id = () -> tz;
+        LocalDate now = LocalDate.now();
 
-		return getSun(location, id, now);
-	}
+        return getSun(location, id, now);
+    }
 
-	@GetMapping(value = "/future")
-	public List<Sun> future(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
-			@RequestParam(value = "amount", defaultValue = "7") int amount,
-			@RequestParam(value = "interval", defaultValue = "0") Interval interval,
-			@RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
+    @GetMapping(value = "/future")
+    public List<Sun> future(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
+                            @RequestParam(value = "amount", defaultValue = "7") int amount,
+                            @RequestParam(value = "interval", defaultValue = "0") Interval interval,
+                            @RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
 
-		TZID id = () -> tz;
-		List<Sun> suns = new ArrayList<>();
+        TZID id = () -> tz;
+        List<Sun> suns = new ArrayList<>();
 
-		switch (interval) {
-		case DAY:
-			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now().plusDays(i);
+        switch (interval) {
+            case DAY:
+                for (int i = 0; i < amount; ++i) {
+                    LocalDate now = LocalDate.now().plusDays(i);
 
-				Sun sun = getSun(location, id, now);
-				suns.add(sun);
-			}
-			break;
-		case MONTH:
-			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now().plusDays(i);
+                    Sun sun = getSun(location, id, now);
+                    suns.add(sun);
+                }
+                break;
+            case MONTH:
+                for (int i = 0; i < amount; ++i) {
+                    LocalDate now = LocalDate.now().plusDays(i);
 
-				Sun sun = getSun(location, id, now);
-				suns.add(sun);
-			}
-			break;
-		case YEAR:
-			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now().plusDays(i);
+                    Sun sun = getSun(location, id, now);
+                    suns.add(sun);
+                }
+                break;
+            case YEAR:
+                for (int i = 0; i < amount; ++i) {
+                    LocalDate now = LocalDate.now().plusDays(i);
 
-				Sun sun = getSun(location, id, now);
-				suns.add(sun);
-			}
-			break;
-		default:
-			break;
-		}
+                    Sun sun = getSun(location, id, now);
+                    suns.add(sun);
+                }
+                break;
+            default:
+                break;
+        }
 
-		return suns;
+        return suns;
 
-	}
+    }
 
-	private Sun getSun(Location location, TZID id, LocalDate now) {
-		PlainDate plainDate = PlainDate.from(now);
-		return new Sun(now, sunService.getSunrise(id, plainDate, location),
-				sunService.getSunSet(id, plainDate, location), id, location);
+    private Sun getSun(Location location, TZID id, LocalDate now) {
+        PlainDate plainDate = PlainDate.from(now);
+        return new Sun(now, sunService.getSunrise(id, plainDate, location),
+                sunService.getSunSet(id, plainDate, location), id, location);
 
-	}
+    }
 
-	@GetMapping(value = "/past")
-	public List<Sun> past(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
-			@RequestParam(value = "amount", defaultValue = "7") int amount,
-			@RequestParam(value = "interval", defaultValue = "0") Interval interval,
-			@RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
+    @GetMapping(value = "/past")
+    public List<Sun> past(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
+                          @RequestParam(value = "amount", defaultValue = "7") int amount,
+                          @RequestParam(value = "interval", defaultValue = "0") Interval interval,
+                          @RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
 
-		TZID id = () -> tz;
-		List<Sun> suns = new ArrayList<>();
+        TZID id = () -> tz;
+        List<Sun> suns = new ArrayList<>();
 
-		switch (interval) {
-		case DAY:
-			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now().minusDays(i);
+        switch (interval) {
+            case DAY:
+                for (int i = 0; i < amount; ++i) {
+                    LocalDate now = LocalDate.now().minusDays(i);
 
-				Sun sun = getSun(location, id, now);
-				suns.add(sun);
-			}
-			break;
-		case MONTH:
-			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now().minusDays(i);
+                    Sun sun = getSun(location, id, now);
+                    suns.add(sun);
+                }
+                break;
+            case MONTH:
+                for (int i = 0; i < amount; ++i) {
+                    LocalDate now = LocalDate.now().minusDays(i);
 
-				Sun sun = getSun(location, id, now);
-				suns.add(sun);
-			}
-			break;
-		case YEAR:
-			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now().minusDays(i);
+                    Sun sun = getSun(location, id, now);
+                    suns.add(sun);
+                }
+                break;
+            case YEAR:
+                for (int i = 0; i < amount; ++i) {
+                    LocalDate now = LocalDate.now().minusDays(i);
 
-				Sun sun = getSun(location, id, now);
-				suns.add(sun);
-			}
-			break;
-		default:
-			break;
-		}
+                    Sun sun = getSun(location, id, now);
+                    suns.add(sun);
+                }
+                break;
+            default:
+                break;
+        }
 
-		return suns;
+        return suns;
 
-	}
+    }
 
 }

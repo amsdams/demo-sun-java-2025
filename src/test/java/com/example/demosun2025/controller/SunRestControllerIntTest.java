@@ -19,7 +19,6 @@ class SunRestControllerIntTest {
     private static final int DEFAULT_AMOUNT = 7;
     private static final Interval DEFAULT_INTERVAL = Interval.DAY;
 
-
     @Autowired
     private SunRestController sunRestController;
 
@@ -27,8 +26,6 @@ class SunRestControllerIntTest {
     void today() {
         Sun moon = sunRestController.today(DEFAULT_TZ, DEFAULT_LOCATION);
         assertNotNull(moon);
-
-
     }
 
     @Test

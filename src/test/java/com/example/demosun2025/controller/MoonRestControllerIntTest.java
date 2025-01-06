@@ -19,7 +19,6 @@ class MoonRestControllerIntTest {
     private static final int DEFAULT_AMOUNT = 7;
     private static final Interval DEFAULT_INTERVAL = Interval.DAY;
 
-
     @Autowired
     private MoonRestController moonRestController;
 

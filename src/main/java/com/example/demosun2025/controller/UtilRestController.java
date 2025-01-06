@@ -14,15 +14,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequestMapping("util")
 public class UtilRestController {
+    @GetMapping(value = "/timezones")
+    public List<String> timezones() {
 
-
-	
-
-	@GetMapping(value = "/timezones")
-	public List<String> timezones() {
-
-		List<TZID> ids = Timezone.getAvailableIDs();
+        List<TZID> ids = Timezone.getAvailableIDs();
 
         return ids.stream().map(TZID::canonical).collect(Collectors.toList());
-	}
+    }
 }

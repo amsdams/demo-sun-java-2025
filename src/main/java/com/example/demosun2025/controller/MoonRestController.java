@@ -22,113 +22,113 @@ import java.util.List;
 @RequestMapping("moons")
 public class MoonRestController {
 
-	private final MoonService moonService;
-	private final Clock clock;
+    private final MoonService moonService;
+    private final Clock clock;
 
-	public MoonRestController(MoonService moonService, Clock clock) {
-		this.moonService = moonService;
-		this.clock = clock;
-	}
+    public MoonRestController(MoonService moonService, Clock clock) {
+        this.moonService = moonService;
+        this.clock = clock;
+    }
 
-	@GetMapping(value = "/today")
-	public Moon today(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
-			@RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
+    @GetMapping(value = "/today")
+    public Moon today(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
+                      @RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
 
-		TZID id = () -> tz;
-		LocalDate now = LocalDate.now(clock);
+        TZID id = () -> tz;
+        LocalDate now = LocalDate.now(clock);
 
-		return getMoon(location, id, now);
-	}
+        return getMoon(location, id, now);
+    }
 
-	@GetMapping(value = "/future")
-	public List<Moon> future(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
-			@RequestParam(value = "amount", defaultValue = "7") int amount,
-							 @RequestParam(value = "interval", defaultValue = "DAY") Interval interval,
-			@RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
+    @GetMapping(value = "/future")
+    public List<Moon> future(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
+                             @RequestParam(value = "amount", defaultValue = "7") int amount,
+                             @RequestParam(value = "interval", defaultValue = "DAY") Interval interval,
+                             @RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
 
-		TZID id = () -> tz;
-		List<Moon> moons = new ArrayList<>();
+        TZID id = () -> tz;
+        List<Moon> moons = new ArrayList<>();
 
-		switch (interval) {
-		case DAY:
-			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now(clock).plusDays(i);
-				Moon moon = getMoon(location, id, now);
+        switch (interval) {
+            case DAY:
+                for (int i = 0; i < amount; ++i) {
+                    LocalDate now = LocalDate.now(clock).plusDays(i);
+                    Moon moon = getMoon(location, id, now);
 
-				moons.add(moon);
-			}
-			break;
-		case MONTH:
-			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now(clock).plusMonths(i);
-				Moon moon = getMoon(location, id, now);
+                    moons.add(moon);
+                }
+                break;
+            case MONTH:
+                for (int i = 0; i < amount; ++i) {
+                    LocalDate now = LocalDate.now(clock).plusMonths(i);
+                    Moon moon = getMoon(location, id, now);
 
-				moons.add(moon);
-			}
-			break;
-		case YEAR:
-			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now(clock).plusYears(i);
+                    moons.add(moon);
+                }
+                break;
+            case YEAR:
+                for (int i = 0; i < amount; ++i) {
+                    LocalDate now = LocalDate.now(clock).plusYears(i);
 
-				Moon moon = getMoon(location, id, now);
-				moons.add(moon);
-			}
-			break;
-		default:
-			break;
-		}
+                    Moon moon = getMoon(location, id, now);
+                    moons.add(moon);
+                }
+                break;
+            default:
+                break;
+        }
 
-		return moons;
+        return moons;
 
-	}
+    }
 
-	@GetMapping(value = "/past")
-	public List<Moon> past(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
-			@RequestParam(value = "amount", defaultValue = "7") int amount,
-						   @RequestParam(value = "interval", defaultValue = "DAY") Interval interval,
-			@RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
+    @GetMapping(value = "/past")
+    public List<Moon> past(@RequestParam(value = "tz", defaultValue = "Europe/Amsterdam") String tz,
+                           @RequestParam(value = "amount", defaultValue = "7") int amount,
+                           @RequestParam(value = "interval", defaultValue = "DAY") Interval interval,
+                           @RequestParam(value = "location", defaultValue = "52.379189, 4.899431") Location location) {
 
-		TZID id = () -> tz;
-		List<Moon> moons = new ArrayList<>();
+        TZID id = () -> tz;
+        List<Moon> moons = new ArrayList<>();
 
-		switch (interval) {
-		case DAY:
-			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now(clock).minusDays(i);
+        switch (interval) {
+            case DAY:
+                for (int i = 0; i < amount; ++i) {
+                    LocalDate now = LocalDate.now(clock).minusDays(i);
 
-				Moon moon = getMoon(location, id, now);
-				moons.add(moon);
-			}
-			break;
-		case MONTH:
-			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now(clock).minusMonths(i);
+                    Moon moon = getMoon(location, id, now);
+                    moons.add(moon);
+                }
+                break;
+            case MONTH:
+                for (int i = 0; i < amount; ++i) {
+                    LocalDate now = LocalDate.now(clock).minusMonths(i);
 
-				Moon moon = getMoon(location, id, now);
-				moons.add(moon);
-			}
-			break;
-		case YEAR:
-			for (int i = 0; i < amount; ++i) {
-				LocalDate now = LocalDate.now(clock).minusYears(i);
-				Moon moon = getMoon(location, id, now);
+                    Moon moon = getMoon(location, id, now);
+                    moons.add(moon);
+                }
+                break;
+            case YEAR:
+                for (int i = 0; i < amount; ++i) {
+                    LocalDate now = LocalDate.now(clock).minusYears(i);
+                    Moon moon = getMoon(location, id, now);
 
-				moons.add(moon);
-			}
-			break;
-		default:
-			break;
-		}
+                    moons.add(moon);
+                }
+                break;
+            default:
+                break;
+        }
 
-		return moons;
+        return moons;
 
-	}
+    }
 
-	private Moon getMoon(Location location, TZID id, LocalDate now) {
-		PlainDate plainDate = PlainDate.from(now);
-		return new Moon(now, moonService.getMoonrise(id, plainDate, location),
-				moonService.getMoonSet(id, plainDate, location), id, location);
+    private Moon getMoon(Location location, TZID id, LocalDate now) {
+        PlainDate plainDate = PlainDate.from(now);
+        return new Moon(now, moonService.getMoonrise(id, plainDate, location),
+                moonService.getMoonSet(id, plainDate, location), id, location);
 
-	}
+    }
 
 }

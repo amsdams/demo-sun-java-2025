@@ -35,10 +35,13 @@ public class MoonRestControllerTest {
     private static final int DEFAULT_AMOUNT = 7;
     private static final Interval DEFAULT_INTERVAL = Interval.DAY;
     private static final Instant DEFAULT_NOW = Instant.parse("2042-01-01T12:15:00Z");
+
     @MockitoBean
-    Clock clock;
+    private Clock clock;
+
     @Autowired
     private MockMvc mockMvc;
+
     @MockitoBean
     private MoonService moonService;
 

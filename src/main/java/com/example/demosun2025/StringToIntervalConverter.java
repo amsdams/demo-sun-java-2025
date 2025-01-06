@@ -8,8 +8,6 @@ public class StringToIntervalConverter implements Converter<String, Interval> {
  
     @Override
     public Interval convert(@Nullable String index) {
-   
-
         return Interval.valueOf(index);
     }
 }
