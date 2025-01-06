@@ -17,7 +17,6 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -55,7 +54,7 @@ public class MoonRestControllerTest {
     void today() throws Exception {
 
         this.mockMvc.perform(get("/moons/today")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("{\"date\":\"2042-01-01\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"}")));
+                .andExpect(content().string("{\"date\":\"2042-01-01\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"}"));
     }
 
     @Test
@@ -68,14 +67,14 @@ public class MoonRestControllerTest {
     @Test
     void future() throws Exception {
         this.mockMvc.perform(get("/moons/future")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("{\"date\":\"2042-01-01\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"}")));
+                .andExpect(content().string("[{\"date\":\"2042-01-01\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"},{\"date\":\"2042-01-02\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"},{\"date\":\"2042-01-03\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"},{\"date\":\"2042-01-04\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"},{\"date\":\"2042-01-05\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"},{\"date\":\"2042-01-06\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"},{\"date\":\"2042-01-07\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"}]"));
 
     }
 
     @Test
     void past() throws Exception {
         this.mockMvc.perform(get("/moons/past")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("{\"date\":\"2042-01-01\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"}")));
+                .andExpect(content().string("[{\"date\":\"2042-01-01\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"},{\"date\":\"2041-12-31\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"},{\"date\":\"2041-12-30\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"},{\"date\":\"2041-12-29\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"},{\"date\":\"2041-12-28\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"},{\"date\":\"2041-12-27\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"},{\"date\":\"2041-12-26\",\"rise\":null,\"set\":null,\"location\":{\"latitude\":52.379189,\"longitude\":4.899431},\"timezone\":\"Europe/Amsterdam\"}]"));
 
     }
 
